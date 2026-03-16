@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 export default function usePomodoro() {
-
     const [timeLeft, setTimeLeft] = useState(() => {
         const saved = localStorage.getItem("pomodoro-time");
         return saved ? parseInt(saved) : 1500;

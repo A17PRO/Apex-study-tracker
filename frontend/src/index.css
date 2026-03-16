@@ -240,7 +240,6 @@ code {
 }
 
 .section-h::before {
-
   content: '';
   width: 3px;
   height: 12px;

@@ -134,7 +134,7 @@ export default function TasksView({ tasks, setTasks }) {
                     <div key={t.id} style={{
                         display: 'flex', alignItems: 'center', gap: 12,
                         padding: '13px 16px', background: C.surf,
-                        border: `1px solid ${t.done ? C.border : C.border}`,
+                        border: `1px solid ${C.border}`,
                         borderRadius: 14, transition: 'border-color 0.15s',
                     }}>
                         <div onClick={() => toggle(t.id)} style={{

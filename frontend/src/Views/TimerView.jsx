@@ -48,8 +48,6 @@ export default function TimerView({ tasks = [], settings = {} }) {
         if (active && timeLeft > 0) {
             iv = setInterval(() => setTimeLeft(t => t - 1), 1000);
         }
-        if (timeLeft === 0 && active === false && modeIdx === 0) {
-        }
         return () => clearInterval(iv);
     }, [active, timeLeft]);
 
@@ -186,18 +184,37 @@ export default function TimerView({ tasks = [], settings = {} }) {
             </div>
 
             <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                <button onClick={() => { setTimeLeft(totalTime); setActive(false); }}
-                    style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: "#111827", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <button
+                    onClick={() => { setTimeLeft(totalTime); setActive(false); }}
+                    style={{
+                        width: 40, height: 40, borderRadius: "50%",
+                        border: "none", background: "#111827",
+                        color: "white", cursor: "pointer",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                    }}
+                >
                     <ResetIcon />
                 </button>
 
-                <button onClick={() => setActive(a => !a)}
-                    style={{ padding: "12px 28px", borderRadius: "10px", border: "none", background: "#f59e0b", color: "black", fontWeight: 700, cursor: "pointer" }}>
+                <button
+                    onClick={() => setActive(a => !a)}
+                    style={{
+                        padding: "12px 28px", borderRadius: "10px",
+                        border: "none", background: "#f59e0b",
+                        color: "black", fontWeight: 700, cursor: "pointer",
+                    }}
+                >
                     {active ? "Pause" : timeLeft < totalTime ? "Resume" : "Start Focus"}
                 </button>
 
-                <button onClick={() => setModeIdx(i => (i + 1) % MODES.length)}
-                    style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: "#111827", color: "white", cursor: "pointer" }}>
+                <button
+                    onClick={() => setModeIdx(i => (i + 1) % MODES.length)}
+                    style={{
+                        width: 40, height: 40, borderRadius: "50%",
+                        border: "none", background: "#111827",
+                        color: "white", cursor: "pointer",
+                    }}
+                >
                     ▶
                 </button>
             </div>
