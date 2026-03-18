@@ -62,7 +62,6 @@ body {
   border-radius: 2px;
 }
 
-/* ── LAYOUT ── */
 .app-root {
   display: flex;
   height: 100vh;
@@ -79,7 +78,6 @@ body {
   min-width: 0;
 }
 
-/* ── NAV ── */
 .nav {
   width: 84px;
   background: var(--surf);
@@ -154,11 +152,9 @@ body {
   flex: 1;
 }
 
-/* ── TIMER VIEW ── */
 .timer-view {
   flex: 1;
   display: grid;
-  /* 3 columns: left spacer | timer center | right panel */
   grid-template-columns: 1fr auto 300px;
   grid-template-rows: 1fr;
   overflow: hidden;
@@ -325,7 +321,6 @@ body {
   box-shadow: 0 0 8px var(--amber);
 }
 
-/* ── SIDE PANEL (inside timer view) ── */
 .panel-header {
   padding: 20px 20px 0;
   font-size: 11px;
@@ -356,7 +351,6 @@ body {
   gap: 12px;
 }
 
-/* ── STAT CARD ── */
 .stat-card {
   background: var(--surf2);
   border: 1px solid var(--border);
@@ -387,7 +381,6 @@ body {
   margin-left: 3px;
 }
 
-/* ── TASK ITEMS ── */
 .task-item {
   display: flex;
   align-items: center;
@@ -462,7 +455,6 @@ body {
   background: rgba(239, 68, 68, 0.1);
 }
 
-/* ── INPUTS ── */
 .task-input-row {
   display: flex;
   gap: 8px;
@@ -512,7 +504,6 @@ body {
   transform: scale(1.05);
 }
 
-/* ── CHART BAR ── */
 .bar-row {
   display: flex;
   align-items: center;
@@ -548,7 +539,6 @@ body {
   width: 28px;
 }
 
-/* ── AMBIENT ── */
 .sound-card {
   padding: 12px 14px;
   background: var(--surf2);
@@ -620,7 +610,6 @@ body {
   transform: translateX(14px);
 }
 
-/* ── SETTINGS ── */
 .setting-row {
   display: flex;
   align-items: center;
@@ -675,7 +664,6 @@ body {
   color: var(--amber);
 }
 
-/* ── STREAK ── */
 .streak-dots {
   display: flex;
   gap: 6px;
@@ -693,7 +681,6 @@ body {
   background: var(--border);
 }
 
-/* ── ANALYTICS ── */
 .analytics-view {
   flex: 1;
   padding: 40px;
@@ -790,7 +777,6 @@ body {
   color: var(--muted);
 }
 
-/* ── TASKS VIEW ── */
 .tasks-view {
   flex: 1;
   padding: 40px;
@@ -878,7 +864,6 @@ body {
   background: var(--amber2);
 }
 
-/* ── SECTION HEADING ── */
 .section-h {
   font-size: 11px;
   font-weight: 700;

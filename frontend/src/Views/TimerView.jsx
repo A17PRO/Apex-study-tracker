@@ -36,14 +36,12 @@ export default function TimerView({
     return (
         <div style={{ flex: 1, display: "flex", overflow: "hidden", minWidth: 0 }}>
 
-            {/* ── TIMER CENTER ── */}
             <div style={{
                 flex: 1, display: "flex", flexDirection: "column",
                 justifyContent: "center", alignItems: "center",
                 color: "white", gap: "20px",
             }}>
 
-                {/* MODE TABS */}
                 <div style={{ display: "flex", gap: "10px" }}>
                     {MODES.map((m, i) => (
                         <button key={m.key} onClick={() => setModeIdx(i)} style={{
@@ -60,7 +58,6 @@ export default function TimerView({
                     ))}
                 </div>
 
-                {/* TASK CHIP */}
                 {activeTasks.length > 0 && (
                     <div onClick={() => setSelTask(s => (s + 1) % activeTasks.length)} style={{
                         display: "flex", alignItems: "center", gap: 10,
@@ -80,7 +77,6 @@ export default function TimerView({
                     </div>
                 )}
 
-                {/* TIMER RING */}
                 <div style={{ position: "relative", width: 260, height: 260 }}>
                     <svg viewBox="0 0 280 280" style={{ width: "100%", height: "100%" }}>
                         {Array.from({ length: 60 }, (_, i) => {
@@ -109,7 +105,6 @@ export default function TimerView({
                         />
                     </svg>
 
-                    {/* TIMER TEXT */}
                     <div style={{
                         position: "absolute", top: "50%", left: "50%",
                         transform: "translate(-50%,-50%)", textAlign: "center",
@@ -129,7 +124,6 @@ export default function TimerView({
                                 {activeTasks[selTask % activeTasks.length]?.text}
                             </div>
                         )}
-                        {/* SESSION DOTS */}
                         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 10 }}>
                             {Array.from({ length: 4 }, (_, i) => (
                                 <div key={i} style={{
@@ -142,7 +136,6 @@ export default function TimerView({
                     </div>
                 </div>
 
-                {/* CONTROLS */}
                 <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
                     <button onClick={() => { setTimeLeft(totalSecs); setActive(false); }} style={{
                         width: 40, height: 40, borderRadius: "50%", border: "none",
@@ -166,13 +159,11 @@ export default function TimerView({
                     }}>▶</button>
                 </div>
 
-                {/* SESSION COUNT */}
                 <div style={{ fontSize: 11, color: "#64748b", fontFamily: "monospace" }}>
                     {sessCount} session{sessCount !== 1 ? "s" : ""} completed today
                 </div>
             </div>
 
-            {/* ── RIGHT PANEL ── */}
             <SidePanel tasks={tasks} setTasks={setTasks} />
         </div>
     );

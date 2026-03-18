@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { CheckIcon, TrashIcon } from './Icons';
 import { C, SectionLabel } from '../styles.jsx';
 
-// Get last 7 days of real focus data from localStorage
 function getRealWeekData() {
     try {
         const sessions = JSON.parse(localStorage.getItem('apex_sessions') || '[]');
@@ -25,7 +24,6 @@ function getRealWeekData() {
 export default function SidePanel({ tasks, setTasks }) {
     const [input, setInput] = useState('');
 
-    // Real today focus time — auto-resets each day
     const today = new Date().toISOString().slice(0, 10);
     const todayMins = (() => {
         try {
@@ -61,7 +59,6 @@ export default function SidePanel({ tasks, setTasks }) {
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '0 18px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
 
-                {/* Focus time stat */}
                 <div style={{ background: C.surf2, border: `1px solid ${C.border}`, borderRadius: 12, padding: 14 }}>
                     <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, color: C.muted, textTransform: 'uppercase', marginBottom: 6 }}>
                         Total Focus Time

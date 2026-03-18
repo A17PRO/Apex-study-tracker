@@ -222,8 +222,7 @@ export default function AnalyticsView({ tasks }) {
                             const intensity = mins / maxHeatMins;
                             const bg = mins === 0 ? C.border
                                 : intensity > 0.6 ? C.amber
-                                    : intensity > 0.3 ? C.border2
-                                        : '#1a2540';
+                                    : 'rgba(239,68,68,0.3)';
                             return (
                                 <div key={key} title={`${key}: ${mins}m`} style={{
                                     width: 11, height: 11, borderRadius: 3, background: bg,
@@ -235,7 +234,7 @@ export default function AnalyticsView({ tasks }) {
                     <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
                         {[
                             { c: C.amber, l: 'High focus' },
-                            { c: C.border2, l: 'Some focus' },
+                            { c: 'rgba(239,68,68,0.3)', l: 'Some focus' },
                             { c: C.border, l: 'No sessions' },
                         ].map(({ c, l }) => (
                             <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
