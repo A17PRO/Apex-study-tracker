@@ -1,13 +1,44 @@
 import { useState } from 'react';
 import { CheckIcon, TrashIcon } from './Icons';
-import { WEEK_DATA } from '../data/constants';
 import { C, SectionLabel } from '../styles.jsx';
+
+// Get last 7 days of real focus data from localStorage
+function getRealWeekData() {
+    try {
+        const sessions = JSON.parse(localStorage.getItem('apex_sessions') || '[]');
+        const now = new Date();
+        return Array.from({ length: 7 }, (_, i) => {
+            const dt = new Date(now);
+            dt.setDate(dt.getDate() - (6 - i));
+            const key = dt.toISOString().slice(0, 10);
+            const label = ['S', 'M', 'T', 'W', 'T', 'F', 'S'][dt.getDay()];
+            const mins = sessions
+                .filter(s => s.date === key)
+                .reduce((a, s) => a + (s.duration || 0), 0);
+            return { d: label, m: mins };
+        });
+    } catch (_) {
+        return ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map(d => ({ d, m: 0 }));
+    }
+}
 
 export default function SidePanel({ tasks, setTasks }) {
     const [input, setInput] = useState('');
-    const todayMins = 75;
+
+    // Real today focus time — auto-resets each day
+    const today = new Date().toISOString().slice(0, 10);
+    const todayMins = (() => {
+        try {
+            const sessions = JSON.parse(localStorage.getItem('apex_sessions') || '[]');
+            return sessions
+                .filter(s => s.date === today)
+                .reduce((a, s) => a + (s.duration || 0), 0);
+        } catch (_) { return 0; }
+    })();
+
     const goal = 180;
-    const maxBar = Math.max(...WEEK_DATA.map(d => d.m));
+    const weekData = getRealWeekData();
+    const maxBar = Math.max(...weekData.map(d => d.m), 1);
 
     const toggle = (id) => setTasks(ts => ts.map(t => t.id === id ? { ...t, done: !t.done } : t));
     const del = (id) => setTasks(ts => ts.filter(t => t.id !== id));
@@ -30,6 +61,7 @@ export default function SidePanel({ tasks, setTasks }) {
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '0 18px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
 
+                {/* Focus time stat */}
                 <div style={{ background: C.surf2, border: `1px solid ${C.border}`, borderRadius: 12, padding: 14 }}>
                     <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, color: C.muted, textTransform: 'uppercase', marginBottom: 6 }}>
                         Total Focus Time
@@ -45,10 +77,11 @@ export default function SidePanel({ tasks, setTasks }) {
                             height: '100%', borderRadius: 2,
                             width: `${Math.min(100, (todayMins / goal) * 100)}%`,
                             background: C.amber, boxShadow: `0 0 6px ${C.amber}88`,
+                            transition: 'width 0.6s ease',
                         }} />
                     </div>
                     <div style={{ fontSize: 9, color: C.muted, fontFamily: C.mono }}>
-                        Goal: {goal}m — {Math.round((todayMins / goal) * 100)}% done
+                        Goal: {goal}m — {Math.round(Math.min(100, (todayMins / goal) * 100))}% done
                     </div>
                 </div>
 
@@ -124,21 +157,29 @@ export default function SidePanel({ tasks, setTasks }) {
 
                 <SectionLabel>This Week</SectionLabel>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    {WEEK_DATA.map(({ d, m }) => (
-                        <div key={d} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {weekData.map(({ d, m }, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                             <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, width: 12 }}>{d}</span>
                             <div style={{ flex: 1, height: 6, background: C.border, borderRadius: 3, overflow: 'hidden' }}>
                                 <div style={{
                                     height: '100%', borderRadius: 3,
-                                    width: `${(m / maxBar) * 100}%`,
-                                    background: m === maxBar ? C.amber : C.border2,
-                                    boxShadow: m === maxBar ? `0 0 6px ${C.amber}66` : 'none',
+                                    width: m === 0 ? '0%' : `${(m / maxBar) * 100}%`,
+                                    background: m === maxBar && m > 0 ? C.amber : C.border2,
+                                    boxShadow: m === maxBar && m > 0 ? `0 0 6px ${C.amber}66` : 'none',
+                                    transition: 'width 0.6s ease',
                                 }} />
                             </div>
-                            <span style={{ fontFamily: C.mono, fontSize: 9, color: C.muted, width: 28, textAlign: 'right' }}>{m}m</span>
+                            <span style={{ fontFamily: C.mono, fontSize: 9, color: C.muted, width: 28, textAlign: 'right' }}>
+                                {m > 0 ? `${m}m` : '—'}
+                            </span>
                         </div>
                     ))}
                 </div>
+                {weekData.every(d => d.m === 0) && (
+                    <div style={{ fontSize: 10, color: C.muted, textAlign: 'center', paddingTop: 4 }}>
+                        Complete sessions to see your week
+                    </div>
+                )}
             </div>
         </div>
     );

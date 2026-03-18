@@ -11,7 +11,7 @@ const NAV_ITEMS = [
 export default function NavBar({ view, setView }) {
     return (
         <nav style={{
-            width: 80, height: '100%', background: '#0c0f1a',
+            width: 80, height: '100vh', background: '#0c0f1a',
             borderRight: '1px solid #1c2333',
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             padding: '20px 0', gap: 4, zIndex: 20, flexShrink: 0,
